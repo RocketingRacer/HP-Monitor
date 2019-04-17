@@ -1,0 +1,63 @@
+class TextBox:
+    def text_objects(self,text, font):
+        textSurface = font.render(text, True, TitleColor)
+        return textSurface, textSurface.get_rect()
+    def __init__(self,cords,text,size):
+        self.cords = cords
+        textFont = pygame.font.Font('freesansbold.ttf',size)
+        self.TextSurf, self.TextRect = self.text_objects(text, textFont)
+        self.TextRect.center = (cords[0],cords[1])
+    def show(self,surface):
+        surface.blit(self.TextSurf, self.TextRect)
+    def update(self,text,size):
+        self.TextSurf, self.TextRect = self.text_objects(text, textFont)
+        self.TextRect.center = (cords[0],cords[1])
+class Button:
+    padding = 8
+    def __init__(self,textBox,color,clickedColor,command=None):
+        self.clickedColor = clickedColor
+        self.command = command
+        self.color = color
+        self.text = textBox
+        self.buttonSurf = pygame.Surface(textBox.cords)
+        self.buttonSurf = pygame.transform.scale(self.buttonSurf,textBox.TextRect[2:])
+        self.buttonRect = self.buttonSurf.get_rect()
+        self.buttonRect.center =textBox.cords
+        self.buttonSurf.fill(color)
+        self.buttonSurf.blit(textBox.TextSurf,(0,0))
+    def setColor(self,color):
+        self.buttonSurf.fill(color)
+        self.buttonSurf.blit(self.text.TextSurf,(0,0))
+    def show(self,surface):
+        surface.blit(self.buttonSurf, self.buttonRect)
+    def hover(self):
+        mousePos = pygame.mouse.get_pos()
+        if self.buttonRect.collidepoint(mousePos):
+            self.setColor(self.clickedColor)
+            #print("Hovered",mousePos)
+            for event in pygame.event.get():
+            	if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.command()
+
+        else:
+            self.setColor(self.color)
+def test():
+    print("test")
+def setup():
+    window = pygame.display.set_mode((500,500))
+    window.fill(background)
+    title = TextBox((250,100),"Hello World",50)
+    button1Text = TextBox((250,250),"Click Me",25)
+    button1 = Button(button1Text,(100,100,100),(250,50,50),test)
+    title.show(window)
+    button1.show(window)
+    pygame.display.flip()
+    for i in range(50):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                quit()
+        pygame.time.wait(100)
+        button1.hover()
+        button1.show(window)
+        pygame.display.flip()
+        pygame.event.pump()
