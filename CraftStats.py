@@ -5,7 +5,7 @@ pygame.init()
 title = ("Arial", 44)
 header =("Arial", 25)
 plain = ("Arial", 14)
-class Plane:
+class PlaneInfo:
     def __init__(self):
         print("WIP")
 class Bar:
