@@ -9,7 +9,9 @@ def main():
     for i in range(100):
         game.update()
         time.sleep(2)
-
+class Utilitys:
+    def getconn():
+        return krpc.connect()
 class Plane:
     def __init__(self,starthp,startfuel,startammo,hp,fuel,ammo,name,i,team):
         self.id = str(i)

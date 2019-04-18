@@ -5,6 +5,14 @@ pygame.init()
 title = ("Arial", 44)
 header =("Arial", 25)
 plain = ("Arial", 14)
+class Plane:
+    def __init__(self):
+        print("WIP")
+class Bar:
+    def __init__(self):
+        print("WIP")
+
+
 class Overlay:
     def parseColor(self,color):
         letters = color[-6:]
@@ -16,10 +24,17 @@ class Overlay:
         self.background = self.parseColor(background)
         self.Acolor = self.parseColor(Acolor)
         self.BColor = self.parseColor(Bcolor)
-        print(self.background)
+        #print(self.background)
         self.window = pygame.display.set_mode(size,pygame.RESIZABLE)
         self.window.fill(self.background)
         pygame.display.flip()
+        self.planes = []
+        self.conn = backend.Utilitys.getconn()
+        self.commandQueue = []
+        self.data = backend.gameLoop(self.conn,self.commandQueue)
+        self.update()
+    def update(self):
+        planes = self.data.update(self.commandQueue[])
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -70,7 +85,7 @@ class Application(tk.Frame):
 
     def start(self):
         overlay = Overlay((500,500),self.BackgroundBox.get(),self.ForegroundBoxA.get(),self.ForegroundBoxB.get())
-        
+
 pygame.init()
 background = (255,255,255)
 TitleColor = (0,0,0)
