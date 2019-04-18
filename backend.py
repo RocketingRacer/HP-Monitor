@@ -102,7 +102,9 @@ class gameLoop:
             except Exception as e:
                 print("Something Destroyed")
         self.planes = newPlanes
-    def update(self):
+    def update(self,commandQueue):
+        self.commandQueue.extend(commandQueue)
+
         ret = []
         if self.commandQueue.pop == 'close':
             quit()
